@@ -11,12 +11,32 @@ namespace PrimeFinderProject
 
         private void btnPrimes1_Click(object sender, EventArgs e)
         {
-
+            int number;
+            if (int.TryParse(txtNumber1.Text, out number))
+            {
+                Task.Run(() =>
+                {
+                    List<int> primeNumbers = FindPrimes(number);
+                    UpdateListBox(listBoxPrimes1, primeNumbers);
+                });
+            }
+            else
+            {
+                MessageBox.Show("Not a valid integer. Enter A Valid number");
+            }
         }
 
         private void btnPrimes2_Click(object sender, EventArgs e)
         {
-
+            int number;
+            if (int.TryParse(txtNumber2.Text, out number))
+            {
+                Task.Run(() =>
+                {
+                    List<int> primeNumbers = FindPrimes(number);
+                    UpdateListBox(listBoxPrimes2, primeNumbers);
+                });
+            }
         }
 
         //Render List of Primes
@@ -64,5 +84,17 @@ namespace PrimeFinderProject
             return true;
         }
 
+        //Render Data in list box
+        private void UpdateListBox(ListBox listBox, List<int> primes)
+        {
+            listBox.Invoke((MethodInvoker)delegate
+            {
+                listBox.Items.Clear();
+                foreach (int prime in primes)
+                {
+                    listBox.Items.Add(prime);
+                }
+            });
+        }
     }
 }
