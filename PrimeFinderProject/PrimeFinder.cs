@@ -14,11 +14,13 @@ namespace PrimeFinderProject
             int number;
             if (int.TryParse(txtNumber1.Text, out number))
             {
-                Task.Run(() =>
-                {
-                    List<int> primeNumbers = FindPrimes(number);
-                    UpdateListBox(listBoxPrimes1, primeNumbers);
-                });
+                //Task.Run(() =>
+                //{
+                //    List<int> primeNumbers = FindPrimes(number);
+                //    UpdateListBox(listBoxPrimes1, primeNumbers);
+                //});
+                Thread threadBtn1 = new Thread(() => ShowPrimes(number, listBoxPrimes1));
+                threadBtn1.Start();
             }
             else
             {
@@ -31,12 +33,20 @@ namespace PrimeFinderProject
             int number;
             if (int.TryParse(txtNumber2.Text, out number))
             {
-                Task.Run(() =>
-                {
-                    List<int> primeNumbers = FindPrimes(number);
-                    UpdateListBox(listBoxPrimes2, primeNumbers);
-                });
+                //Task.Run(() =>
+                //{
+                //    List<int> primeNumbers = FindPrimes(number);
+                //    UpdateListBox(listBoxPrimes2, primeNumbers);
+                //});
+                Thread threadBtn2 = new Thread(() => ShowPrimes(number, listBoxPrimes2));
+                threadBtn2.Start();
             }
+        }
+
+        private void ShowPrimes(int number, ListBox listBox)
+        {
+            List<int> primes = FindPrimes(number);
+            UpdateListBox(listBox, primes);
         }
 
         //Render List of Primes
